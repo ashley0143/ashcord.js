@@ -1,4 +1,5 @@
 const { Inflate } = require('pako');
+const Message = require('./constructors/Message.js');
 
 function camelCase(string) {
     string = string.split('_');
@@ -24,6 +25,9 @@ module.exports = (bot, message, flag) => {
             bot.sessionID = msg.d.session_id;
             bot.user = msg.d.user;
             bot.emit('ready');
+            break;
+        case 'MESSAGE_CREATE':
+            bot.emit('messageCreate', new Message(bot, msg.d));
             break;
         default:
             if (msg.t && msg.d)

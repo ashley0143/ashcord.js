@@ -5,10 +5,14 @@ beta discord api lib (WIP)
 ```js
 const qtClient = require('./index.js');
 const qt = new qtClient();
+const prefix = '!';
 
 qt.on('ready', () => console.log('Bot is ready!'));
-qt.on('messageCreate', message => {
-    console.log(message);
+qt.on('messageCreate', async (message) => {
+    switch (message.content.slice(prefix.length).toLowerCase()) {
+        case 'ping':
+            return await message.reply('pong! uwu');
+    }
 });
 
 qt.connect('discord token here');
