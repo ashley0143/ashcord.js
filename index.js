@@ -58,7 +58,7 @@ class Client extends EventEmitter {
 
     const path = options.commandHandlerPath;
     if (path !== undefined) {
-      for (const file of readdirSync(path).filter(f => /\.[jt]s$/.test(f)) {
+      for (const file of readdirSync(path).filter(f => /\.[jt]s$/.test(f))) {
         try {
           const command = require(`${path.endsWith('/') ? path : `${path}/`}${file}`);
 
