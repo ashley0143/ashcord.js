@@ -36,15 +36,15 @@ class User {
 }
 
 class ClientUser extends User {
-	constructor(bot, data) {
-		super(data);
-		
-		this.changeName = async (username) => {
-			if (!username || this.name === username) return;
-			await bot.request('PATCH', '/users/@me', { username });
-			this.name = username;
-		};
-	}
+    constructor(bot, data) {
+        super(data);
+        
+        this.changeName = async (username) => {
+            if (!username || this.name === username) return;
+            await bot.request('PATCH', '/users/@me', { username });
+            this.name = username;
+        };
+    }
 }
 
 module.exports = { User, ClientUser };
