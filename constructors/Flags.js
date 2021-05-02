@@ -1,6 +1,18 @@
-const { intents, privilegedIntents } = require('../Constants');
+const { intents, privilegedIntents, permissions } = require('../Constants');
 const intentNames = Object.keys(intents);
 const intentValues = Object.values(intents);
+
+class Permissions {
+    constructor(value) {
+        this.value = isNaN(value) ? 0 : Number(value);
+        
+        if (Array.isArray(value))
+            this.value = value.every(Number.isInteger) ? value.reduce((a, b) => a | b) : value.filter(x => typeof x === 'string' && permissions[x.toUpperCase()]).map(x => permissions[x.toLowerCase()]).reduce((a, b) => a | b);
+        
+        for (const key in permissions)
+            this[key] = (this.value | permissions[key]) === this.value;
+    }
+}
 
 class Intents {
     constructor(data) {
@@ -40,7 +52,10 @@ class Intents {
     }
 }
 
-module.exports.Intents = Object.assign(Intents, Object.assign({
-    ALL: intentValues.reduce((a, b) => a | b),
-    PRIVILEGED: privilegedIntents.map(x => intents[x]).reduce((a, b) => a | b)
-}, intents));
+module.exports = {
+    Permissions,
+    Intents: Object.assign(Intents, Object.assign({
+        ALL: intentValues.reduce((a, b) => a | b),
+        PRIVILEGED: privilegedIntents.map(x => intents[x]).reduce((a, b) => a | b)
+    }, intents))
+};

@@ -1,7 +1,7 @@
-const { Inflate } = require('pako');
+const { Inflate }             = require('pako');
 const { camelCase, evaluate } = require('./Util');
-const Message = require('./constructors/Message');
-const User    = require('./constructors/User');
+const Message                 = require('./constructors/Message');
+const { ClientUser }          = require('./constructors/User');
 
 module.exports = (bot, message, flag) => {
     const msg = evaluate(message, flag);
@@ -11,7 +11,7 @@ module.exports = (bot, message, flag) => {
         case 'READY':
             if (!msg.d.user.bot) process.exit(1); // no selfbots allowed uwu
             bot.sessionID = msg.d.session_id;
-            bot.user = new User(msg.d.user);
+            bot.user = new ClientUser(bot, msg.d.user);
             bot.emit('ready');
             bot.emit('debug', 'Successfully connected to the discord gateway. Gateway sends a READY event.');
             break;

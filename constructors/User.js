@@ -1,6 +1,6 @@
 const { snowflakeDate } = require('../util');
 
-module.exports = class User {
+class User {
     constructor(data) {
         this.verified = data.verified || false;
         this.name = data.username;
@@ -34,3 +34,17 @@ module.exports = class User {
         return snowflakeDate(this.id);
     }
 }
+
+class ClientUser extends User {
+	constructor(bot, data) {
+		super(data);
+		
+		this.changeName = async (username) => {
+			if (!username || this.name === username) return;
+			await bot.request('PATCH', '/users/@me', { username });
+			this.name = username;
+		};
+	}
+}
+
+module.exports = { User, ClientUser };
