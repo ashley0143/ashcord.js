@@ -132,8 +132,8 @@ class Client extends EventEmitter {
             });
             this.socket.on('close', c => {
                 clearInterval(this.hb);
-				// this should cover most common close codes, right?
-				// documentation: https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-close-event-codes
+                // this should cover most common close codes, right?
+                // documentation: https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-close-event-codes
                 switch (c) {
                     case 4000:
                         console.error('An unknown error has occurred. Reconnecting...');
