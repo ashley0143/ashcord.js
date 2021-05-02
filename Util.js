@@ -29,5 +29,15 @@ module.exports = {
         inflator.push(msg);
         if (inflator.err) throw new Error('An error occurred while decompressing data');
         return JSON.parse(inflator.toString());
+    },
+    
+    parseFlags: (current, data, cls) => {
+        for (const key in data)
+            data[key] = ((current | data[key]) === current);
+        if (!cls) return data;
+        
+        // can't Object.assign a class ;-;
+        for (const key in data)
+            cls[key] = data[key];
     }
 }

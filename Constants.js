@@ -54,5 +54,15 @@ module.exports = {
         MANAGE_THREADS: (1 << 34),
         USE_PUBLIC_THREADS: (1 << 35),
         USE_PRIVATE_THREADS: (1 << 36)
+    },
+    verificationLevel: ['NONE', 'LOW', 'MEDIUM', 'HIGH', 'VERY_HIGH'],
+    systemChannelFlags: {
+        SUPPRESS_JOIN_NOTIFICATIONS: (1 << 0),
+        SUPPRESS_PREMIUM_SUBSCRIPTIONS: (1 << 1),
+        SUPPRESS_GUILD_REMINDER_NOTIFICATIONS: (1 << 2)
+    },
+    defaultMessageNotificationLevel: {
+        ALL_MESSAGES: 0,
+        ONLY_MENTIONS: 1
     }
 }

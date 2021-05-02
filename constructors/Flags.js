@@ -1,4 +1,5 @@
 const { intents, privilegedIntents, permissions } = require('../Constants');
+const { parseFlags } = require('../Util');
 const intentNames = Object.keys(intents);
 const intentValues = Object.values(intents);
 
@@ -9,8 +10,7 @@ class Permissions {
         if (Array.isArray(value))
             this.value = value.every(Number.isInteger) ? value.reduce((a, b) => a | b) : value.filter(x => typeof x === 'string' && permissions[x.toUpperCase()]).map(x => permissions[x.toLowerCase()]).reduce((a, b) => a | b);
         
-        for (const key in permissions)
-            this[key] = (this.value | permissions[key]) === this.value;
+        parseFlags(this.value, permissions, this);
     }
 }
 
@@ -47,8 +47,7 @@ class Intents {
             }
         }
         
-        for (const key of intentNames)
-            this[key] = ((this.value | intents[key]) === this.value);
+        parseFlags(this.value, intents, this);
     }
 }
 
