@@ -1,30 +1,19 @@
 const { Inflate } = require('pako');
-const Message = require('./constructors/Message.js');
-
-function camelCase(string) {
-    string = string.split('_');
-    return string[0].toLowerCase() + (string.length > 1 ? string.slice(1).map(x => `${x[0].toUpperCase()}${x.slice(1).toLowerCase()}`).join('') : '');
-}
-
-function evaluate(msg, flag) {
-    if (!flag || typeof flag !== 'object') flag = {};
-    if (!flag.binary) return JSON.parse(msg);
-    const inflator = new Inflate();
-    inflator.push(msg);
-    if (inflator.err) throw new Error('An error occurred while decompressing data');
-    return JSON.parse(inflator.toString());
-}
+const { camelCase, evaluate } = require('./Util');
+const Message = require('./constructors/Message');
+const User    = require('./constructors/User');
 
 module.exports = (bot, message, flag) => {
     const msg = evaluate(message, flag);
-    bot.emit('debug', `Received a raw gateway event with the OP code of ${msg.op}.`);
+    bot.emit('raw', { event: (msg.t || 'UNKNOWN'), opCode: (msg.op || 0), data: (msg.d || {}) });
     
     switch (msg.t) {
         case 'READY':
             if (!msg.d.user.bot) process.exit(1); // no selfbots allowed uwu
             bot.sessionID = msg.d.session_id;
-            bot.user = msg.d.user;
+            bot.user = new User(msg.d.user);
             bot.emit('ready');
+            bot.emit('debug', 'Successfully connected to the discord gateway. Gateway sends a READY event.');
             break;
         case 'MESSAGE_CREATE':
             bot.emit('messageCreate', new Message(bot, msg.d));
