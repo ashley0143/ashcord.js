@@ -1,5 +1,5 @@
 # ashcord.js
-Beta discord api lib. (WIP)
+Best discord api lib ever lol get rectjrkjtghyjrkjeghyrjugkfjgrhk idk lol (WIP)
 
 **Current working example:**
 ```js
