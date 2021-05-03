@@ -1,7 +1,8 @@
 const { Inflate } = require('pako');
-const { camelCase, evaluate } = require('./Util.js');
-const Message = require('./constructors/Message.js');
-const { ClientUser } = require('./constructors/User.js');
+const { camelCase, evaluate } = require('./Util');
+const Message = require('./constructors/Message');
+const Guild = require('./constructors/Guild');
+const { ClientUser } = require('./constructors/User');
 
 module.exports = function websocket(bot, message, flag) {
   const msg = evaluate(message, flag);
@@ -16,11 +17,17 @@ module.exports = function websocket(bot, message, flag) {
       if (!msg.d.user.bot) process.exit(1); // no selfbots allowed uwu
       bot.sessionID = msg.d.session_id;
       bot.user = new ClientUser(bot, msg.d.user);
+      bot.guilds = new Map();
       bot.emit('ready');
       bot.emit('debug', '[PAYLOAD: READY] Successfully connected to the Discord gateway.');
       break;
     case 'MESSAGE_CREATE':
       bot.emit('messageCreate', new Message(bot, msg.d));
+      break;
+    case 'GUILD_CREATE':
+      const guild = new Guild(msg.d);
+      bot.guilds.set(msg.d.id, guild);
+      bot.emit('guildCreate', guild);
       break;
     default:
       if (msg.t && msg.d)

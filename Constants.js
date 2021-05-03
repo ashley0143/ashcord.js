@@ -61,8 +61,5 @@ module.exports = {
         SUPPRESS_PREMIUM_SUBSCRIPTIONS: (1 << 1),
         SUPPRESS_GUILD_REMINDER_NOTIFICATIONS: (1 << 2)
     },
-    defaultMessageNotificationLevel: {
-        ALL_MESSAGES: 0,
-        ONLY_MENTIONS: 1
-    }
+    defaultMessageNotificationLevel: [ 'ALL_MESSAGES', 'ONLY_MENTIONS' ]
 }

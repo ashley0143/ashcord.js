@@ -39,5 +39,13 @@ module.exports = {
         // can't Object.assign a class ;-;
         for (const key in data)
             cls[key] = data[key];
+    },
+    
+    assign: (cls, object, func) => {
+        for (const key in object) {
+            const name = func(key);
+            if (name)
+                cls[name] = object[key];
+        }
     }
 }

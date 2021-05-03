@@ -25,7 +25,7 @@ class Intents {
           if (Number.isInteger(part)) {
             if (!intentValues.includes(part)) throw new Error(`The intent bit: '${part}' does not exist.`);
               this.value |= part;
-              continue;
+            continue;
           }
                     
           if (typeof part !== 'string') throw new TypeError(`Invalid type: '${typeof part}', must be either a number or a string.`);
