@@ -17,13 +17,13 @@ class User {
     if (this.avatar) {
       if (typeof format === 'string') {
         format = format.toLowerCase().replace(/\./g, '');
-        if (!['gif', 'png', 'jpeg', 'jpg', 'webp'].includes(format)) throw new TypeError(`Invalid format: ${format}`);
+        if (!['gif', 'png', 'jpeg', 'jpg', 'webp'].includes(format)) throw new TypeError(`Invalid format: ${format} lol`);
         if (format === 'gif' && !this.avatarAnimated) format = 'png';
       } else format = 'png';
 
       size = Number.isInteger(size) ? size : 4096;
 
-      if (size & (size - 1) || (size < 16 || size > 4096)) throw new TypeError('The size must be a power of two between 16 and 4096.');
+      if (size & (size - 1) || (size < 16 || size > 4096)) throw new TypeError('The size must be a power of two between 16 and 4096. bcz h');
 
       return `https://cdn.discordapp.com/avatars/${this.id}/${this.avatar}.${format}?size=${size}`;
     }
@@ -32,7 +32,7 @@ class User {
   }
     
   get avatarAnimated() {
-    return this.avatar.startsWith('a_');
+    return this.avatar.startsWith('a_'); //a
   }
     
   get createdAt() {
