@@ -142,12 +142,12 @@ class Client extends EventEmitter {
                         throw new Error('You sent an invalid Gateway opcode or an invalid payload for an opcode. Don\'t do that!');
                         break;
                     case 4004:
-                        throw new Error('Invalid client token provided');
+                        throw new Error('Invalid client token provided lol');
                     case 4008:
                         throw new Error(`Woah nelly! You're sending payloads to us too quickly. Slow it down! You will be disconnected on receiving this.`);
                         break;
                     case 4013:
-                        throw new Error('You sent an invalid intent for a Gateway Intent. You may have incorrectly calculated the bitwise value.');
+                        throw new Error('You sent an invalid intent for a Gateway Intent. You may have incorrectly calculated the bitwise value. or AMOGUS uwu nyaaa '); //im not ok
                     case 4014:
                         throw new Error('You sent a disallowed intent for a Gateway Intent. You may have tried to specify an intent that you have not enabled or are not approved for.');
                 }
